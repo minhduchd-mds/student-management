@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package javaconsole.model;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,37 +24,46 @@ public class StudentModel {
     public ArrayList<Student> getList() {
         return listStudent;
     }
-    public  static void update(Student  student)
+    public  static void update(Student student)
     {
-        try
-      {
-          Connection cnn = DAO.getConnection();
-           PreparedStatement ps = cnn.prepareStatement(
-            "UPDATE Messages SET id = ? name = ? WHERE roll_name = ? AND class_name = ? AND status = ?");
-        // set the preparedstatement parameters
         
-           ps.setInt(1, id);
-           String name = "duc"; String roll_name = "d";String class_name = "i sm";
-           ps.setString(2, name);
-           ps.setString(3, roll_name);
-           ps.setString(4, class_name);
-           ps.setInt(5, 3);
+        try
+        {
+            Connection cnn = DAO.getConnection();
+             Statement stt = cnn.createStatement();
+             
+            String sql = "UPDATE student SET id = ?,name = ?";
             
-        // call executeUpdate to execute our sql update statemen
-        System.out.println("Thực hiện lệnh update: " + ps);
-
-            ps.executeUpdate();
+            PreparedStatement ps = cnn.prepareStatement(sql);
+            
+            
+            ps.setInt(1, 2);
+            ps.setString(2, "duc");
+    
+           
+            System.out.println("Thực hiện lệnh update: " + ps);
+            int rowsUpdated = ps.executeUpdate();
             cnn.close();
             System.out.println("Thành công.");
-      }
-      catch (SQLException e)
-      {
-        // log the exception
-       System.err.println("Lỗi trong quá trình insert dữ liệu." + e.getMessage());
-      }
+       }
+       catch (SQLException e)
+       {
+    
+           System.err.println("Lỗi trong quá trình insert dữ liệu." + e.getMessage());
+       }
     }
-    public void delete(Student student){
-        listStudent.remove(student);
+    public static void delete(Student student){
+        try
+            {
+            String sql = "DELETE FROM student WHERE id = ?";
+            PreparedStatement preparedStmt = DAO.getConnection().prepareStatement(sql);
+            preparedStmt.setInt(1, 2);
+            int rowsUpdated = preparedStmt.executeUpdate();
+        }
+        catch (SQLException e)
+        {
+        System.err.println("Đã được xóa khỏi sql! " + e.getMessage());
+        }
     }
     public void insert (Student student){
         try {
@@ -105,27 +113,22 @@ public class StudentModel {
     public static void main(String[] args) {
         StudentModel studentModel = new StudentModel();
         Student student = new Student();
-        
-        studentModel.insert(student);
-        StudentModel.update(student);
-    }
-
-    public void edit(long id, Student studentEdited) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // Chưa insert dữ liệu 
+         //StudentModel.insert(student);
+        //StudentModel.update(student);
+        //StudentModel.delete(student);
     }
 
     public void closeConnection() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void delete(long id) {
+    public void edit(long id, Student studentEdited) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-   
-   
-    
-  
-  
+    public void delete(long id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package console.restaurant.models;
+package javaconsole.model;
 
 /**
  *
@@ -13,7 +13,7 @@ public class GlobalConfig {
 
     private static final String CONNECTION_URL_PREFIX = "jdbc:mysql://";
     private static final String HOST = "localhost:3306/";
-    private static final String DATABASE = "quanlynhahang?useUnicode=yes&characterEncoding=UTF-8";
+    private static final String DATABASE = "studentmangaer?useUnicode=yes&characterEncoding=UTF-8";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "";
 

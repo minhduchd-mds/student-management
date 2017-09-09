@@ -57,6 +57,17 @@ public class Student {
         this.status = status;
     }     
 
+    public Student(int id, String name, String email, String rollnumber, String className, int status) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.rollnumber = rollnumber;
+        this.className = className;
+        this.status = status;
+    }
+
+    public Student() {
+    }
 
     public void setRollnumber(String string) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

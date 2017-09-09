@@ -20,7 +20,15 @@ public class StudentModel {
     private static ArrayList<Student> listStudent;
     private static int id;
 
-    
+    public static void main(String[] args) {
+        listStudent = new ArrayList<Student>();
+        Student stut= new Student(1203,"linh","aloha.@gmail.com","","",1);
+        StudentModel student = new StudentModel();
+        student.insert(stut);
+        
+        //StudentModel.update(stut);
+        //StudentModel.delete( stut);
+    }
     public ArrayList<Student> getList() {
         return listStudent;
     }
@@ -37,7 +45,7 @@ public class StudentModel {
             PreparedStatement ps = cnn.prepareStatement(sql);
             
             
-            ps.setInt(1, 2);
+            ps.setInt(1, 6);
             ps.setString(2, "duc");
     
            
@@ -57,7 +65,7 @@ public class StudentModel {
             {
             String sql = "DELETE FROM student WHERE id = ?";
             PreparedStatement preparedStmt = DAO.getConnection().prepareStatement(sql);
-            preparedStmt.setInt(1, 2);
+            preparedStmt.setInt(1, 5);
             int rowsUpdated = preparedStmt.executeUpdate();
         }
         catch (SQLException e)
@@ -69,20 +77,24 @@ public class StudentModel {
         try {
             Connection cnn = DAO.getConnection();
             Statement stt = cnn.createStatement();
-            String sqlQuery = ("INSERT INTO "
-                   + "student "
-                   + "(name, email, roll_number, class_name, status)"
-                   + "VALUES "
-                   + "('"
-                   + student.getName() + "', '"
-                   + student.getEmail() + "', '"
-                   + student.getRollnumber() + "', '"
-                   + student.getClassName() + "',"
-                   + student.getStatus() + ")");
-            System.out.println("Thực hiện lệnh SQl: " + sqlQuery);
-
-            stt.execute(sqlQuery);
-            System.out.println("Thành công.");
+            StringBuilder strBuild = new StringBuilder();
+            strBuild.append("INSERT INTO ");
+            strBuild.append("student ");
+            strBuild.append("(name, email, roll_number, class_name, status) ");
+            strBuild.append("VALUES ");
+            strBuild.append("('");
+            strBuild.append(student.getName() + "', '");
+            strBuild.append(student.getEmail() + "', '");
+            strBuild.append(student.getRollnumber() + "', '");
+            strBuild.append(student.getClassName()+ "', ");
+            strBuild.append(student.getStatus());
+            strBuild.append(");");
+            
+            stt.execute(strBuild.toString());
+            System.out.println("Thực hiện lệnh SQl: " + strBuild.toString());
+            long endTime=System.currentTimeMillis();
+           
+            System.out.println("Thành công." +(strBuild.toString()));
         } catch (SQLException e) {
             System.err.println("Lỗi trong quá trình insert dữ liệu." + e.getMessage());
         }
@@ -110,14 +122,7 @@ public class StudentModel {
         return listStudent;
     }
     
-    public static void main(String[] args) {
-        StudentModel studentModel = new StudentModel();
-        Student student = new Student();
-        // Chưa insert dữ liệu 
-         //StudentModel.insert(student);
-        //StudentModel.update(student);
-        //StudentModel.delete(student);
-    }
+    
 
     public void closeConnection() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
